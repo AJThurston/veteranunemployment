@@ -12,17 +12,12 @@ library(imager)
 df.raw <- blsAPI(list(
   'startyear' = 2000,
   'endyear' = 2020,
-  'annualaverage'=TRUE,
   'registrationKey'= apikey,
   'seriesid' = c('LNU04049526', 'LNU04066408','LNU04049601')
 ), 2, TRUE)
 
 # Separate out Monthly and Annual Datasets
-df <- df.raw %>% 
-  filter(periodName != "Annual")
-
-df.annual <- df.raw %>% 
-  filter(periodName == "Annual")
+df <- df.raw 
 
 # Variable Recode ----
 df$value <- as.numeric(df$value)/100
@@ -74,7 +69,6 @@ p1 <- ggplot(df, aes(x=yearperiod, y=value, group=vettype)) +
         plot.caption = element_text(size = rel(.50)),
         plot.subtitle = element_text(size = rel(.75))
       )
-p1
 
 # ggsave as Cairo-png for anti-aliased raster ----
 ggsave("C:\\Users\\Owner\\Documents\\GitHub\\veteranunemployment\\veteranunemployment.png", 
@@ -86,16 +80,6 @@ ggsave("C:\\Users\\Owner\\Documents\\GitHub\\veteranunemployment\\veteranunemplo
        dpi = 300,
        type = "cairo-png")
 
-ggsave("C:\\Users\\Owner\\Documents\\GitHub\\veteranunemployment\\veteranunemployment.twitter.png", 
-       plot = p1,
-       scale = 1,
-       width = 8,
-       height = 4,
-       units = "in",
-       dpi = 300,
-       type = "cairo-png")
-
 # View raster image in Rstudio using imager package ---
 par(mar=c(0,0,0,0))
 plot(load.image("C:\\Users\\Owner\\Documents\\GitHub\\veteranunemployment\\veteranunemployment.png"))
-plot(load.image("C:\\Users\\Owner\\Documents\\GitHub\\veteranunemployment\\veteranunemployment.twitter.png"))
