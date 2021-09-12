@@ -22,7 +22,7 @@ df.tmp1 <- blsAPI(list(
 
 df.tmp2 <- blsAPI(list(
   'startyear' = 2011,
-  'endyear' = 2020,
+  'endyear' = 2021,
   'registrationKey'= apikey,
   'seriesid' = c('LNU04049526', 'LNU04066408','LNU04049601')
 ), 2, TRUE)
